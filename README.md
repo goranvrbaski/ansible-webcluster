@@ -12,6 +12,6 @@ You can change in ansible.cfg default remote user, also you need to change ip ad
 
 Example running this playbook:
 
-''''
+```
 ansible-playbook run.yml -i hosts --ask-pass
-''''
+```
