@@ -12,7 +12,7 @@ global
     stats socket /var/lib/haproxy/stats level admin
 
 defaults
-    mode                    httpd
+    mode                    http
     log                     global
     option                  httplog
     option                  dontlognull
@@ -30,7 +30,7 @@ defaults
     maxconn                 3000
 
 backend app
-    listen      loadbalancer 0.0.0.0:8888
+    listen      loadbalancer 0.0.0.0:80
     balance     roundrobin
 
 {% for host in groups['web'] %}
