@@ -13,3 +13,8 @@
   become: yes
   roles:
     - web
+
+- hosts: lb
+  become: yes
+  roles:
+    - loadbalancer
