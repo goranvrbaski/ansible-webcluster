@@ -15,22 +15,9 @@
     - nfs-idmap
 
 - name: add nfs export file
-  lineinfile: dest=/etc/exports line={{ item }}
-  with_items:
-    - "/var/nfsshare    10.2.0.40(rw,sync,no_root_squash,no_all_squash)"
-    - "/var/nfsshare    10.2.0.41(rw,sync,no_root_squash,no_all_squash)"
+  template: src=exports.j2 dest=/etc/exports
 
 - name: start nfs
-  service: name=nfs-server state=started enabled=yes
+  service: name=nfs-server state=restarted enabled=yes
 
-- name: restart machine
-  shell: sleep 2 && shutdown -r now "Ansible updates triggered"
-  async: 1
-  poll: 0
-  become: true
-  ignore_errors: true
-
-- name: waiting for server to come back
-  local_action: wait_for host={{ inventory_hostname }} port=22 state=started delay=10 timeout=120
-  become: false
 
