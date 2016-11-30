@@ -89,3 +89,10 @@ ENV/
 .ropeproject
 /test_environment/.vagrant/
 .idea/
+
+
+# vagrant
+.vagrant
+
+# ansible
+run.retry
