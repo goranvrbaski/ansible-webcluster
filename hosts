@@ -1,6 +1,9 @@
 [web]
-10.2.0.40
-10.2.0.41
+10.2.0.41 ansible_ssh_user=vagrant ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key
+10.2.0.42 ansible_ssh_user=vagrant ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key
 
 [nfs]
-10.2.0.60
+10.2.0.60 ansible_ssh_user=vagrant ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key
+
+[lb]
+10.2.0.40 ansible_ssh_user=vagrant ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key
