@@ -4,65 +4,68 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-#  config.ssh.username = "vagrant"
-#  config.ssh.password = "vagrant"
 
     config.hostmanager.enabled = true
-    config.hostmanager.manage_host = true #will update your local /etc/hosts file
+    config.hostmanager.manage_host = true
     config.hostmanager.ignore_private_ip = false
     config.hostmanager.include_offline = true
     config.vbguest.auto_update = false
+    config.ssh.insert_key = false
 
-  config.vm.define "nfs" do |machine|
+   config.vm.define "nfs" do |machine|
     machine.vm.box = "centos/7"
     machine.vm.network :private_network, ip: "10.2.0.60",
                        :netmask => "255.255.0.0"
     machine.vm.hostname = "nfs.dt"
     machine.vm.provider :virtualbox do |v|
       v.customize ["modifyvm", :id, "--memory", 512]
+      v.cpus = 1
     end
   end
 
-  config.vm.define "db" do |machine|
+  config.vm.define "mysql" do |machine|
     machine.vm.box = "centos/7"
     machine.vm.network :private_network, ip: "10.2.0.50",
                        :netmask => "255.255.0.0"
-    machine.vm.hostname = "db.dt"
+    machine.vm.hostname = "mysql.dt"
     machine.vm.provider :virtualbox do |v|
       v.customize ["modifyvm", :id, "--memory", 512]
+      v.cpus = 4
     end
   end
 
-  config.vm.define "wp1" do |machine|
-    machine.vm.box = "centos/7"
-    machine.vm.network :private_network, ip: "10.2.0.40",
-                       :netmask => "255.255.0.0"
-    machine.vm.hostname = "wp1.dt"
-    machine.vm.provider :virtualbox do |v|
-      v.customize ["modifyvm", :id, "--memory", 512]
-    end
-  end
-
-  config.vm.define "wp2" do |machine|
+  config.vm.define "apache-1" do |machine|
     machine.vm.box = "centos/7"
     machine.vm.network :private_network, ip: "10.2.0.41",
                        :netmask => "255.255.0.0"
-    machine.vm.hostname = "wp2.dt"
+    machine.vm.hostname = "apache-1.dt"
     machine.vm.provider :virtualbox do |v|
       v.customize ["modifyvm", :id, "--memory", 512]
+      v.cpus = 1
     end
   end
 
-  config.vm.define "lb" do |machine|
+  config.vm.define "apache-2" do |machine|
     machine.vm.box = "centos/7"
-    machine.vm.network :private_network, ip: "192.168.33.30"
-    machine.vm.network :private_network, ip: "10.2.0.30",
+    machine.vm.network :private_network, ip: "10.2.0.42",
+                       :netmask => "255.255.0.0"
+    machine.vm.hostname = "apache-2.dt"
+    machine.vm.provider :virtualbox do |v|
+      v.customize ["modifyvm", :id, "--memory", 512]
+      v.cpus = 1
+    end
+  end
+
+  config.vm.define "loadbalancer" do |machine|
+    machine.vm.box = "centos/7"
+    machine.vm.network :private_network, ip: "192.168.200.10"
+    machine.vm.network :private_network, ip: "10.2.0.40",
                        :netmask => "255.255.0.0"
     machine.vm.hostname = "loadbalancer.dt"
     machine.vm.provider :virtualbox do |v|
-      v.customize ["modifyvm", :id, "--memory", 512]
+      v.customize ["modifyvm", :id, "--memory", 1024]
+      v.cpus = 2
     end
   end
-
 
 end
